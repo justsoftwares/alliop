@@ -11,7 +11,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 SECRET_KEY = env('SECRET_KEY')
 
-DEBUG = env('DEBUG', True)
+DEBUG = bool(env('DEBUG', True))
 
 ALLOWED_HOSTS = env('ALLOWED_HOSTS').split(',')
 
@@ -22,8 +22,8 @@ SITE_DESCRIPTION = 'All In One Place. Site where you can realise your wishes'
 REST_FRAMEWORK = {
     'DEFAULT_SCHEMA_CLASS': 'drf_spectacular.openapi.AutoSchema',
     'DEFAULT_AUTHENTICATION_CLASSES': (
-        'rest_framework_simplejwt.authentication.JWTAuthentication',
         'rest_framework.authentication.BasicAuthentication',
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
     )
 }
 
@@ -82,6 +82,12 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': BASE_DIR / 'db.sqlite3',
+    } if DEBUG else {
+        'ENGINE': env('ENGINE'),
+        'NAME': env('NAME'),
+        'HOST': env('HOST'),
+        'USER': env('USER'),
+        'PASSWORD': env('PASSWORD'),
     }
 }
 
@@ -107,6 +113,8 @@ TIME_ZONE = 'UTC'
 USE_I18N = True
 
 USE_TZ = True
+
+STATIC_ROOT = BASE_DIR / 'static'
 
 STATIC_URL = 'static/'
 
