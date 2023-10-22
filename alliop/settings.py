@@ -82,12 +82,6 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': BASE_DIR / 'db.sqlite3',
-    } if DEBUG else {
-        'ENGINE': env('ENGINE'),
-        'NAME': env('NAME'),
-        'HOST': env('HOST'),
-        'USER': env('USER'),
-        'PASSWORD': env('PASSWORD'),
     }
 }
 
